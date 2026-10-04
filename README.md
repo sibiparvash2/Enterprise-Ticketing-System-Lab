@@ -119,6 +119,111 @@
   * **Root-Cause Isolation:** Web access (Outlook on the Web / OWA) verified operational, confirming Exchange mailbox and M365 licensing health; defect isolated to local desktop cached credentials or profile corruption.
 * **Engineering Impact:** Enables frontline agents to quickly review diagnostic history and verify issue isolation before updating priority or routing to Tier 2.
 
+  ---
+
+### 10. Service Level Agreement (SLA) Policy Architecture
+
+![SLA Policy Basics](./screenshots/10-sla-policy-basics.png)
+
+* **Objective:** Establishing an enterprise-grade Service Level Agreement framework aligned with ITIL incident management standards.
+* **Policy Identity:**
+  * **Policy Name:** `Corporate IT Support SLA`
+  * **Description:** Enterprise response and resolution targets mapped to P1–P4 incident priorities.
+* **Engineering Impact:** Provides contractual operational commitments across IT support tiers, standardizing response pacing based on severity.
+
+---
+
+### 11. SLA Scope & Evaluation Condition Logic
+
+![SLA Policy Scope Conditions](./screenshots/11-sla-policy-conditions.png)
+
+* **Objective:** Defining precise evaluation boundaries so the SLA engine monitors active tickets without persisting past resolution.
+* **Evaluation Logic (Meet ALL conditions):**
+  * `Ticket > Ticket status` | `Is not` | `Solved`
+* **Platform Behavior:** Ensures the SLA calculation engine actively tracks all inbound, open, and pending incidents, and automatically detaches clock tracking once an incident reaches `Solved` or `Closed`.
+
+---
+
+### 12. Tiered Response Target Matrix Configuration
+
+![SLA Target Matrix](./screenshots/12-sla-targets-matrix.png)
+
+* **Objective:** Configuring deterministic response times across all four ITIL priority tiers.
+* **Configured Target Values (First Reply Time):**
+  * **Urgent (P1):** `0 Hours, 15 Minutes, 0 Seconds` (Calendar hours for critical business continuity).
+  * **High (P2):** `1 Hour, 0 Minutes, 0 Seconds`.
+  * **Normal (P3):** `4 Hours, 0 Minutes, 0 Seconds`.
+  * **Low (P4):** `8 Hours, 0 Minutes, 0 Seconds`.
+* **Engineering Impact:** Guarantees critical service outages (P1) receive immediate technical engagement within 15 minutes, while standard operational requests remain on sustainable business-hour timelines.
+
+---
+
+### 13. SLA Engine Execution & First Reply Breach Telemetry
+
+![SLA Breach Validation](./screenshots/13-sla-breach-validation.png)
+
+* **Objective:** Validating real-time SLA badge tracking and analyzing metric breach telemetry on an active P1 incident.
+* **Inspected Incident:** `Ticket #9` (*P1 Network Outage - Wireless AP Controller Down*).
+* **Telemetry Diagnostics Observed:**
+  * **SLA Metric Badge:** Displays an active breach indicator (`-31h` in red).
+  * **Root Cause Analysis:** The incident was created with an **Internal note** rather than a public response. Because internal notes do not communicate with the requester, Zendesk treated the ticket as awaiting an initial agent response, running the 15-minute First Reply clock continuously until it breached into negative time.
+  * **Routing & Escalation:** Group assigned to `L3 Network Infrastructure` with priority set to `Urgent`.
+* **ITIL Operational Insight:** Highlights the operational difference between public customer communications and internal engineering notes in metric auditing.
+
+---
+
+### 10. Service Level Agreement (SLA) Policy Architecture
+
+![SLA Policy Basics](./screenshots/10-sla-policy-basics.png)
+
+* **Objective:** Establishing an enterprise-grade Service Level Agreement framework aligned with ITIL incident management standards.
+* **Policy Identity:**
+  * **Policy Name:** `Corporate IT Support SLA`
+  * **Description:** Enterprise response and resolution targets mapped to P1–P4 incident priorities.
+* **Engineering Impact:** Provides contractual operational commitments across IT support tiers, standardizing response pacing based on severity.
+
+---
+
+### 11. SLA Scope & Evaluation Condition Logic
+
+![SLA Policy Scope Conditions](./screenshots/11-sla-policy-conditions.png)
+
+* **Objective:** Defining precise evaluation boundaries so the SLA engine monitors active tickets without persisting past resolution.
+* **Evaluation Logic (Meet ALL conditions):**
+  * `Ticket > Ticket status` | `Is not` | `Solved`
+* **Platform Behavior:** Ensures the SLA calculation engine actively tracks all inbound, open, and pending incidents, and automatically detaches clock tracking once an incident reaches `Solved` or `Closed`.
+
+---
+
+### 12. Tiered Response Target Matrix Configuration
+
+![SLA Target Matrix](./screenshots/12-sla-targets-matrix.png)
+
+* **Objective:** Configuring deterministic response times across all four ITIL priority tiers.
+* **Configured Target Values (First Reply Time):**
+  * **Urgent (P1):** `0 Hours, 15 Minutes, 0 Seconds` (Calendar hours for critical business continuity).
+  * **High (P2):** `1 Hour, 0 Minutes, 0 Seconds`.
+  * **Normal (P3):** `4 Hours, 0 Minutes, 0 Seconds`.
+  * **Low (P4):** `8 Hours, 0 Minutes, 0 Seconds`.
+* **Engineering Impact:** Guarantees critical service outages (P1) receive immediate technical engagement within 15 minutes, while standard operational requests remain on sustainable business-hour timelines.
+
+---
+
+### 13. SLA Engine Execution & First Reply Breach Telemetry
+
+![SLA Breach Validation](./screenshots/13-sla-breach-validation.png)
+
+* **Objective:** Validating real-time SLA badge tracking and analyzing metric breach telemetry on an active P1 incident.
+* **Inspected Incident:** `Ticket #9` (*P1 Network Outage - Wireless AP Controller Down*).
+* **Telemetry Diagnostics Observed:**
+  * **SLA Metric Badge:** Displays an active breach indicator (`-31h` in red).
+  * **Root Cause Analysis:** The incident was created with an **Internal note** rather than a public response. Because internal notes do not communicate with the requester, Zendesk treated the ticket as awaiting an initial agent response, running the 15-minute First Reply clock continuously until it breached into negative time.
+  * **Routing & Escalation:** Group assigned to `L3 Network Infrastructure` with priority set to `Urgent`.
+* **ITIL Operational Insight:** Highlights the operational difference between public customer communications and internal engineering notes in metric auditing.
+```
+
+
+
   
 
 
