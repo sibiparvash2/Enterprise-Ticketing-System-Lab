@@ -59,7 +59,7 @@
 
 ### 5. Awaiting Requester Action (Pending State Diagnostics)
 
-![Pending Ticket Triage](./screenshots/05-pending-ticket-triage.jpg)
+![Pending Ticket Triage](./screenshots/05-pending-ticket-triage.png))
 
 * **Objective:** Managing remote access troubleshooting and placing tickets into a `Pending` state while awaiting end-user network diagnostics.
 * **Inspected Incident:** `Ticket #4` (*GlobalProtect VPN Connection Timeout Error*).
