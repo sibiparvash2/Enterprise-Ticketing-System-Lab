@@ -55,4 +55,34 @@
 
 * ---
 
+* ---
+
+### 5. Awaiting Requester Action (Pending State Diagnostics)
+
+![Pending Ticket Triage](./screenshots/05-pending-ticket-triage.jpg)
+
+* **Objective:** Managing remote access troubleshooting and placing tickets into a `Pending` state while awaiting end-user network diagnostics.
+* **Inspected Incident:** `Ticket #4` (*GlobalProtect VPN Connection Timeout Error*).
+* **Technical Diagnostics Observed:**
+  * **Symptom:** Remote employee unable to establish an IPsec/SSL VPN tunnel to the enterprise network; receiving a `Gateway Not Responding` timeout.
+  * **Diagnostic Guidance Dispatched:** Provided instructions for the user to verify local router/ISP port filtering (UDP 4501/500/ESP) and restart the local GlobalProtect client service.
+* **ITIL Workflow Insight:** Setting status to `Pending` transfers responsibility to the requester, pausing internal response metrics while keeping the active incident queue clean.
+
+---
+
+### 6. Incident Resolution & Identity Remediation Verification
+
+![Solved Ticket Verification](./screenshots/06-solved-ticket-verification.png)
+
+* **Objective:** Performing identity verification and completing the full resolution lifecycle for access control incidents in the `Recently solved tickets` view.
+* **Inspected Incident:** `Ticket #3` (*Windows Account Lockout - Urgent Password Reset*).
+* **Remediation Details Observed:**
+  * **Symptom:** User entered incorrect Active Directory password three times on a corporate laptop, triggering an automated domain security lockout.
+  * **Resolution Action:** Verified user identity, checked Active Directory domain controller logs, unlocked the account object, terminated stale sessions, and provisioned a temporary logon password.
+  * **Status:** Marked `Solved`, completing the ticket lifecycle and halting all active SLA clocks.
+* **Engineering Impact:** Demonstrates ITIL-aligned identity administration and proper resolution documentation for auditing and SLA compliance.
+```
+
+
+
 
