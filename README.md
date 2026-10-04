@@ -57,7 +57,7 @@
 
 ### 5. Fast-Triage Inspection & Incident Classification
 
-![Ticket Hover Inspection](./screenshots/05-agent-workspace-overview.jpg)
+![Ticket Hover Inspection](./screenshots/05-agent-workspace-overview.ppg)
 
 * **Objective:** Performing rapid triage using hover inspection cards directly within the ticket queue without context-switching.
 * **Inspected Incident:** `Ticket #5` (*Outlook Client Stuck on 'Trying to Connect' Status*).
