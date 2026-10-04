@@ -220,6 +220,91 @@
   * **Root Cause Analysis:** The incident was created with an **Internal note** rather than a public response. Because internal notes do not communicate with the requester, Zendesk treated the ticket as awaiting an initial agent response, running the 15-minute First Reply clock continuously until it breached into negative time.
   * **Routing & Escalation:** Group assigned to `L3 Network Infrastructure` with priority set to `Urgent`.
 * **ITIL Operational Insight:** Highlights the operational difference between public customer communications and internal engineering notes in metric auditing.
+
+---
+
+### 14. Auto-Escalation Trigger Definition
+
+![Trigger Identity](./screenshots/14-trigger-name.png)
+
+* **Objective:** Initializing an automated business rule trigger in Zendesk to eliminate manual triage delay for critical infrastructure outages.
+* **Trigger Name:** `Auto-Escalate P1 Major Network Incidents to L3`
+* **Trigger Description:** Automatically routes critical network outage tickets to L3 Network Infrastructure and sets priority to Urgent.
+* **System Impact:** Automates Tier 1 triage by programmatically detecting outage patterns at ticket creation.
+
+---
+
+### 15. Lifecycle Execution Scope (Meet ALL Conditions)
+
+![Trigger ALL Conditions](./screenshots/15-trigger-all-conditions.png)
+
+* **Objective:** Restricting trigger execution so it only evaluates tickets during initial submission.
+* **Configured Conditions (Meet ALL of the following):**
+  * `Ticket > Ticket` | `Is` | `Created`
+  * `Ticket > Status category` | `Is not` | `Solved`
+* **Engineering Insight:** Restricting the trigger to `Ticket is Created` prevents infinite update loops and avoids overriding manual tier reassignments on subsequent updates.
+
+---
+
+### 16. Outage Heuristic Keyword Matching (Meet ANY Conditions)
+
+![Trigger ANY Conditions](./screenshots/16-trigger-any-conditions.png)
+
+* **Objective:** Establishing a multi-keyword filter across subject lines and incoming comment bodies to detect network disruptions.
+* **Configured Conditions (Meet ANY of the following):**
+  * `Ticket > Subject text` | `Contains at least one of the following words` | `outage down switch wifi "wi-fi" AP gateway`
+  * `Ticket > Comment text` | `Contains at least one of the following words` | `outage "packet loss" unresponsive offline "network down"`
+* **Platform Behavior:** Zendesk inspects inbound ticket text strings in real time, matching exact phrases and tokenized words to identify outage reports.
+
+---
+
+### 17. Automated Actions & SLA Hook Configuration
+
+![Trigger Actions](./screenshots/17-trigger-actions.png)
+
+* **Objective:** Defining the automated remediation payload applied when an incoming ticket satisfies the outage criteria.
+* **Configured Actions:**
+  * `Ticket > Group` $\rightarrow$ `L3 Network Infrastructure`
+  * `Ticket > Priority` $\rightarrow$ `Urgent`
+  * `Ticket > Add tags` $\rightarrow$ `auto_escalated_p1`, `network_outage`
+* **System Impact:** Automatically assigns the ticket to Tier 3, sets priority to Urgent (arming the 15-minute response / 2-hour resolution SLA targets), and tags the ticket for reporting queries.
+
+---
+
+### 18. End-to-End Validation: Automatic Routing to L3
+
+![Auto-Routed Assignee](./screenshots/18-auto-routed-assignee.png)
+
+* **Objective:** Validating the automated trigger by submitting a simulated outage ticket (`Ticket #10`: *Floor 3 Wi-Fi is completely down and offline*).
+* **Ingested Payload:** User reported 100% packet loss to the local switch and unresponsive access points.
+* **Execution Verified:** The ticket bypassed Tier 1 triage and was immediately assigned to `L3 Network Infrastructure`.
+
+---
+
+### 19. End-to-End Validation: Priority Elevation & Telemetry Tags
+
+![Auto-Urgent Priority and Tags](./screenshots/19-auto-urgent-priority-tags.png)
+
+* **Objective:** Verifying that priority elevation, tags, and SLA attachments applied correctly.
+* **System Results Verified:**
+  * **Priority:** Elevated to `Urgent` automatically.
+  * **Tags:** Appended `auto_escalated_p1` and `network_outage`.
+  * **SLA Attached:** The `2h` Full Resolution SLA badge immediately attached upon creation based on the Urgent priority.
+
+---
+
+### 20. Microsecond Audit Trail Forensics
+
+![Trigger Audit Forensics](./screenshots/20-trigger-audit-execution.png)
+
+* **Objective:** Inspecting the Zendesk event timeline to verify the microsecond execution order of business rules.
+* **Audit Execution Sequence Observed:**
+  1. **Baseline Ingestion:** Default rule `Set tickets with no priority to normal` initially applied `Normal` priority.
+  2. **Rule Interception:** Trigger `Auto-Escalate P1 Major Network Incidents to L3` fired immediately upon creation.
+  3. **Queue Reassignment:** Group updated from `Support` to `L3 Network Infrastructure`.
+  4. **Priority Promotion:** Priority promoted from `Normal` to `Urgent`.
+  5. **Tag Ledger:** Appended `auto_escalated_p1` and `network_outage`.
+* **Engineering Impact:** Provides concrete verification that the automated routing engine and SLA policies executed as designed.
 ```
 
 
