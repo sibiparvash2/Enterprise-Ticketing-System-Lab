@@ -1,5 +1,9 @@
 # Enterprise-Ticketing-System-Lab
 
+Enterprise ITSM lab in Zendesk Support aligned with ITIL v4. Streamlines Tier-1 to Tier-3 workflows, automates P1 incident triage, enforces tiered SLA policies, and implements heuristic routing triggers with complete audit trail verification.
+
+---
+
 ### 1. Admin Center Environment Setup
 
 ![Admin Center Home](screenshots/01-admin-center-dashboard.png)
