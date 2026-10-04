@@ -81,8 +81,45 @@
   * **Resolution Action:** Verified user identity, checked Active Directory domain controller logs, unlocked the account object, terminated stale sessions, and provisioned a temporary logon password.
   * **Status:** Marked `Solved`, completing the ticket lifecycle and halting all active SLA clocks.
 * **Engineering Impact:** Demonstrates ITIL-aligned identity administration and proper resolution documentation for auditing and SLA compliance.
-```
+  
 
+### 7. ITIL Lifecycle State Segmentation (Open, Pending, Solved)
+
+![Ticket Lifecycle States](./screenshots/07-ticket-lifecycle-states.png)
+
+* **Objective:** Organizing ticket queues into discrete ITIL lifecycle states to maintain SLA accountability and workflow visibility.
+* **Lifecycle States Managed:**
+  * **Open Status:** Active tickets requiring internal troubleshooting (`Ticket #5`, `Ticket #6`, and the Sev-1 Manyata Outage `Ticket #7` set to `Urgent`).
+  * **Pending Status:** `Ticket #4` (*GlobalProtect VPN Connection Timeout Error*) paused while awaiting end-user network test feedback.
+  * **Solved Status:** `Ticket #3` (*Windows Account Lockout - Urgent Password Reset*) successfully fulfilled and marked resolved.
+* **System Impact:** Moving tickets to `Pending` pauses requester wait timers where configured, while `Solved` seals the incident record and halts all active SLA countdowns[cite: 1].
+
+---
+
+### 8. Agent Workspace Dashboard & Queue Tracking
+
+![Agent Workspace Overview](./screenshots/08-agent-workspace-overview.png)
+
+* **Objective:** Monitoring incoming ticket volume, channel sources, and resolution metrics within the unified Agent Workspace.
+* **Key Components:**
+  * **Unified Queue View:** Real-time visibility into open incident streams across multiple enterprise applications (Outlook, GlobalProtect VPN, Microsoft 365, and Core Wireless Infrastructure).
+  * **Workload Counters:** Active tracking showing 4 open/pending incidents and 1 ticket solved for the week.
+* **Operational Insight:** Agent Workspace consolidates multi-channel support requests into a streamlined single-pane-of-glass queue, preventing ticket aging and backlog drift.
+
+---
+
+### 9. Fast-Triage Inspection & Incident Classification
+
+![Ticket Hover Inspection](./screenshots/09-ticket-hover-preview.png)
+
+* **Objective:** Performing rapid triage using hover inspection cards directly within the ticket queue without context-switching.
+* **Inspected Incident:** `Ticket #5` (*Outlook Client Stuck on 'Trying to Connect' Status*).
+* **Technical Diagnostics Observed:**
+  * **Symptom:** Desktop Microsoft 365 Outlook client frozen on the loading/connecting state.
+  * **Root-Cause Isolation:** Web access (Outlook on the Web / OWA) verified operational, confirming Exchange mailbox and M365 licensing health; defect isolated to local desktop cached credentials or profile corruption.
+* **Engineering Impact:** Enables frontline agents to quickly review diagnostic history and verify issue isolation before updating priority or routing to Tier 2.
+
+  
 
 
 
